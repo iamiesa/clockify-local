@@ -19,6 +19,13 @@ Built with **Laravel 13**, **Livewire 4**, **Alpine.js**, **Tailwind CSS 4** and
 | **Reports** | Summary (group + sub-group by project, client, user, tag, task, date, description), Detailed (paginated entries), Weekly (rows × days); filters for team, groups, clients, projects, tags, billable, description; decimal or h:mm:ss; CSV export |
 | **Profile** | Name, email, timezone, week start, 12/24-hour time, avatar colour, password |
 
+**One shared organisation:** by default every user joins a single workspace and sees all of its
+projects and tags; members can create projects and tags, and admins see everyone's time on the
+Dashboard (Team view) and in Reports. The account in `OWNER_EMAIL` is always the Owner. Set
+`SHARED_WORKSPACE=false` for separate workspaces per user/team instead; when switching an existing
+install to shared mode, `php artisan tracker:consolidate` (also run automatically by a migration)
+merges existing workspaces without losing data.
+
 Durations are stored in seconds and money in cents; timestamps are stored in UTC and displayed in
 each user's timezone. The effective hourly rate is resolved in this order:
 **project member rate → project rate → workspace member rate → workspace default**, and snapshotted
@@ -89,6 +96,7 @@ On boot the container runs migrations and caches config, routes and views automa
    apply. When prompted, set:
    - `DB_URL` — the Neon connection string
    - `APP_URL` — your Render URL, e.g. `https://timetrack.onrender.com`
+   - `OWNER_EMAIL` — the email of the account that should own the workspace
 3. Wait for the first deploy, open the URL and **Sign up**. The first account becomes the owner of
    its own workspace; invite others from **Team**.
 
@@ -128,6 +136,8 @@ and `MYSQL_ATTR_SSL_CA` pointed at it.
 | `SESSION_DRIVER`, `CACHE_STORE` | `database` |
 | `SESSION_SECURE_COOKIE` | `true` |
 | `QUEUE_CONNECTION` | `sync` |
+| `SHARED_WORKSPACE` | `true` (one organisation workspace for everyone) |
+| `OWNER_EMAIL` | email of the account that is always the Owner |
 
 Email delivery is not configured; invitation links are shown in the Team screen to copy and share.
 

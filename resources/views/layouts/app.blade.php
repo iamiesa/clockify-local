@@ -52,7 +52,9 @@
                         </button>
                     </form>
                 @endforeach
-                <div class="border-t border-line-soft"><a href="{{ route('workspaces') }}" wire:navigate class="dropdown-item text-primary">Manage workspaces</a></div>
+                @unless (config('tracker.shared_workspace'))
+                    <div class="border-t border-line-soft"><a href="{{ route('workspaces') }}" wire:navigate class="dropdown-item text-primary">Manage workspaces</a></div>
+                @endunless
             </div>
         </div>
 
@@ -64,7 +66,9 @@
                     <p class="text-xs text-muted truncate">{{ $user->email }}</p>
                 </div>
                 <a href="{{ route('profile') }}" wire:navigate class="dropdown-item"><x-icon name="user" class="size-4 text-muted" /> Profile settings</a>
-                <a href="{{ route('workspaces') }}" wire:navigate class="dropdown-item"><x-icon name="workspace" class="size-4 text-muted" /> Workspaces</a>
+                @unless (config('tracker.shared_workspace'))
+                    <a href="{{ route('workspaces') }}" wire:navigate class="dropdown-item"><x-icon name="workspace" class="size-4 text-muted" /> Workspaces</a>
+                @endunless
                 <div class="border-t border-line-soft px-3 py-2.5" x-data>
                     <p class="mb-1.5 text-xs uppercase tracking-wide text-muted">Theme</p>
                     <div class="grid grid-cols-3 overflow-hidden rounded-sm border border-line text-xs">

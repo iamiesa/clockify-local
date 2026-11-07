@@ -105,7 +105,7 @@ class ProjectForm extends Component
                 'name' => trim($data['name']),
                 'client_id' => $clientId,
                 'color' => $data['color'],
-                'is_public' => $this->isPublic,
+                'is_public' => config('tracker.shared_workspace') ? true : $this->isPublic,
                 'billable' => $this->billable,
                 'hourly_rate' => Money::toCents($data['hourlyRate']),
                 'estimate_hours' => $data['estimateHours'] === '' || $data['estimateHours'] === null ? null : (int) $data['estimateHours'],

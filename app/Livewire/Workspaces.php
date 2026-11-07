@@ -18,6 +18,7 @@ class Workspaces extends Component
 
     public function create(WorkspaceCreateAction $create): mixed
     {
+        abort_if(config('tracker.shared_workspace'), 403, 'This organisation uses a single shared workspace.');
         $this->validate(['name' => 'required|string|max:100']);
         $create($this->user(), trim($this->name));
 
@@ -26,6 +27,7 @@ class Workspaces extends Component
 
     public function leave(int $workspaceId): mixed
     {
+        abort_if(config('tracker.shared_workspace'), 403, 'This organisation uses a single shared workspace.');
         $membership = Membership::query()->where('user_id', $this->user()->id)->where('workspace_id', $workspaceId)->firstOrFail();
         abort_if($membership->role === Role::Owner, 403, 'Owners cannot leave their workspace.');
         $membership->delete();

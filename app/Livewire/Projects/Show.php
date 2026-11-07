@@ -112,6 +112,9 @@ class Show extends Component
     public function setVisibility(bool $public): void
     {
         $this->authorizeManage();
+        if (config('tracker.shared_workspace')) {
+            return;
+        }
         $this->project->update(['is_public' => $public]);
         unset($this->project);
     }

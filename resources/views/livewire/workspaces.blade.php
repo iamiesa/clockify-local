@@ -1,6 +1,9 @@
 <div>
     <h1 class="page-title mb-5">Workspaces</h1>
 
+    @if (config('tracker.shared_workspace'))
+        <p class="mb-4 text-sm text-muted">Everyone in your organisation works in one shared workspace.</p>
+    @else
     <form wire:submit="create" class="card mb-4 flex flex-wrap items-start gap-2 p-3">
         <div class="min-w-48 flex-1">
             <input wire:model="name" class="input" placeholder="New workspace name (e.g. your company or organization)">
@@ -8,6 +11,7 @@
         </div>
         <button class="btn-primary">Create workspace</button>
     </form>
+    @endif
 
     <div class="card overflow-x-auto">
         <div class="card-header">Your workspaces</div>
@@ -24,7 +28,7 @@
                             @unless ($current)
                                 <form method="POST" action="{{ route('workspaces.switch', $m->workspace_id) }}" class="inline">@csrf<button class="btn-link">Switch</button></form>
                             @endunless
-                            @if ($m->role !== \App\Enums\Role::Owner)
+                            @if ($m->role !== \App\Enums\Role::Owner && ! config('tracker.shared_workspace'))
                                 <button type="button" class="btn-link ml-3 text-danger!" wire:click="leave({{ $m->workspace_id }})" wire:confirm="Leave {{ $m->workspace->name }}?">Leave</button>
                             @endif
                         </td>

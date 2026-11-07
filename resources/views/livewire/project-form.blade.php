@@ -45,7 +45,9 @@
                 </div>
             </div>
             <div class="flex flex-col gap-3 sm:flex-row sm:gap-8">
-                <x-toggle wire:model="isPublic" label="Public" description="Everyone in the workspace can track on it" />
+                @unless (config('tracker.shared_workspace'))
+                    <x-toggle wire:model="isPublic" label="Public" description="Everyone in the workspace can track on it" />
+                @endunless
                 <x-toggle wire:model="billable" label="Billable" description="New entries are billable by default" />
             </div>
         </form>

@@ -2,7 +2,7 @@
 
 namespace App\Livewire\Auth;
 
-use App\Actions\WorkspaceCreateAction;
+use App\Actions\WorkspaceJoinAction;
 use App\Models\Project;
 use App\Models\User;
 use App\Support\Timezone;
@@ -24,7 +24,7 @@ class Register extends Component
 
     public string $timezone = 'UTC';
 
-    public function register(WorkspaceCreateAction $createWorkspace): mixed
+    public function register(WorkspaceJoinAction $joinWorkspace): mixed
     {
         // Timezone is detected silently by the browser, so never block sign-up on it.
         $this->timezone = Timezone::normalize($this->timezone);
@@ -36,13 +36,13 @@ class Register extends Component
             'timezone' => 'required|timezone:all_with_bc',
         ]);
 
-        $user = DB::transaction(function () use ($data, $createWorkspace): User {
+        $user = DB::transaction(function () use ($data, $joinWorkspace): User {
             $user = User::create([
                 ...$data,
                 'email' => mb_strtolower($data['email']),
                 'avatar_color' => Project::COLORS[array_rand(Project::COLORS)],
             ]);
-            $createWorkspace($user, "{$user->name}'s workspace");
+            $joinWorkspace($user);
 
             return $user;
         });

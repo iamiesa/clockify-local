@@ -19,8 +19,9 @@ class Dashboard extends Component
 {
     use InteractsWithWorkspace, WithDateRange;
 
-    #[Url]
-    public string $scope = 'me';
+    /** '' = default: team for admins, own data for members. */
+    #[Url(except: '')]
+    public string $scope = '';
 
     #[Url]
     public string $splitBy = 'project';
@@ -30,7 +31,8 @@ class Dashboard extends Component
         $range = $this->range();
         $probe = new ReportBuilder($this->workspace, $this->user(), new ReportFilters($range));
         $canSeeTeam = $probe->canSeeTeam();
-        $scope = $canSeeTeam && $this->scope === 'team' ? 'team' : 'me';
+        $wanted = $this->scope !== '' ? $this->scope : ($this->isAdmin ? 'team' : 'me');
+        $scope = $canSeeTeam && $wanted === 'team' ? 'team' : 'me';
         $splitBy = in_array($this->splitBy, ['project', 'billable'], true) ? $this->splitBy : 'project';
 
         $builder = new ReportBuilder($this->workspace, $this->user(), new ReportFilters(

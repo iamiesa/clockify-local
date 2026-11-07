@@ -26,7 +26,7 @@ class DatabaseSeeder extends Seeder
     {
         $owner = User::factory()->create(['name' => 'Demo Owner', 'email' => 'demo@example.com', 'timezone' => self::TZ, 'avatar_color' => '#03a9f4']);
         $workspace = app(WorkspaceCreateAction::class)($owner, 'Demo Company');
-        $workspace->update(['hourly_rate' => 2500, 'currency' => 'USD']);
+        $workspace->update(['hourly_rate' => 2500, 'currency' => 'USD', 'members_can_create_projects' => true]);
 
         $members = collect([
             ['Aisha Khan', 'aisha@example.com', Role::Admin, 4000],
@@ -76,7 +76,6 @@ class DatabaseSeeder extends Seeder
             return $project->load('tasks');
         });
 
-        $projects[2]->update(['is_public' => false]);
         $projects[2]->members()->attach([
             $owner->id => ['is_manager' => true, 'hourly_rate' => null],
             $members[1]->id => ['is_manager' => false, 'hourly_rate' => null],
@@ -115,9 +114,6 @@ class DatabaseSeeder extends Seeder
                     }
 
                     $project = mt_rand(0, 9) === 0 ? null : $projects[mt_rand(0, $projects->count() - 1)];
-                    if ($project && ! $project->is_public && ! in_array($user->id, [$owner->id, $members[1]->id, $members[2]->id], true)) {
-                        $project = $projects[0];
-                    }
                     $billable = $project?->billable ?? false;
                     $rate = $project?->hourly_rate ?? $memberRate ?? $workspace->hourly_rate;
 
@@ -157,8 +153,5 @@ class DatabaseSeeder extends Seeder
             DB::table('tag_time_entry')->insert($chunk);
         }
 
-        // A second workspace to demonstrate switching.
-        app(WorkspaceCreateAction::class)($owner, 'Side Projects');
-        $owner->update(['current_workspace_id' => $workspace->id]);
     }
 }

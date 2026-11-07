@@ -59,6 +59,9 @@
             </table>
         </div>
     @elseif ($tab === 'access')
+        @if (config('tracker.shared_workspace'))
+            <p class="mb-4 flex items-center gap-2 text-sm text-muted"><x-icon name="globe" class="size-4" /> Everyone in the workspace can see and track time on this project. Members below can have their own rate or be project managers.</p>
+        @else
         <div class="card mb-4 p-4">
             <p class="label">Visibility</p>
             <div class="flex flex-wrap gap-4 text-sm">
@@ -66,6 +69,7 @@
                 <label class="flex items-center gap-2"><input type="radio" name="vis" class="accent-primary" @checked(! $project->is_public) @disabled(! $this->canManage) wire:click="setVisibility(false)"> <x-icon name="lock" class="size-4 text-muted" /> Private — members below & admins</label>
             </div>
         </div>
+        @endif
         <div class="card overflow-x-auto">
             <div class="card-header">
                 <span>Project members</span>

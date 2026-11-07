@@ -18,11 +18,13 @@
             <option value="none">Without client</option>
             @foreach ($clients as $client)<option value="{{ $client->id }}" wire:key="fc-{{ $client->id }}">{{ $client->name }}</option>@endforeach
         </select>
+        @unless (config('tracker.shared_workspace'))
         <select wire:model.live="access" class="input w-auto" aria-label="Access">
             <option value="">Any access</option>
             <option value="public">Public</option>
             <option value="private">Private</option>
         </select>
+        @endunless
         <select wire:model.live="billing" class="input w-auto" aria-label="Billing">
             <option value="">Any billing</option>
             <option value="billable">Billable</option>

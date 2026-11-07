@@ -33,5 +33,9 @@ services:
         value: sync
       - key: LOG_LEVEL
         value: warning
+      - key: SHARED_WORKSPACE
+        value: "true"          # one organisation workspace shared by every user
+      - key: OWNER_EMAIL
+        sync: false            # this account is always the workspace Owner
       - key: PORT
         value: "8080"

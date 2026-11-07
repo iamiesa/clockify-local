@@ -24,6 +24,15 @@ class User extends Authenticatable
 
     protected $hidden = ['password', 'remember_token'];
 
+    /** Mirrors the column defaults so freshly built models never carry nulls. */
+    protected $attributes = [
+        'timezone' => 'UTC',
+        'week_start' => 1,
+        'time_format' => '24',
+        'date_format' => 'd/m/Y',
+        'avatar_color' => '#03a9f4',
+    ];
+
     /** @var array<int, Membership|null> */
     private array $membershipCache = [];
 

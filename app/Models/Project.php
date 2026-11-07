@@ -67,7 +67,8 @@ class Project extends Model
      */
     public function scopeVisibleTo(Builder $query, User $user, Workspace $workspace): Builder
     {
-        if ($user->isAdminOf($workspace)) {
+        // Shared organisation: every member sees every project.
+        if (config('tracker.shared_workspace') || $user->isAdminOf($workspace)) {
             return $query;
         }
 

@@ -15,7 +15,8 @@ use App\Models\User;
 use App\Models\Workspace;
 use Livewire\Livewire;
 
-it('registers a user with a personal workspace', function () {
+it('registers a user with a personal workspace (multi-workspace mode)', function () {
+    config(['tracker.shared_workspace' => false]);
     Livewire::test(Register::class)
         ->set('name', 'Jane Doe')->set('email', 'Jane@Example.com')->set('password', 'secret-pass')->set('timezone', 'Europe/London')
         ->call('register')
@@ -79,7 +80,8 @@ it('creates projects with an inline client and enforces member permissions', fun
     expect(Project::where('name', 'Member project')->sole()->members->pluck('id')->all())->toBe([$member->id]);
 });
 
-it('archives before deleting projects and hides private projects from non-members', function () {
+it('archives before deleting projects and hides private projects from non-members (multi-workspace mode)', function () {
+    config(['tracker.shared_workspace' => false]);
     [$owner, $workspace] = signIn();
     $project = Project::factory()->for($workspace)->private()->create(['name' => 'Secret']);
 
@@ -103,7 +105,8 @@ it('manages clients and tags with unique names per workspace', function () {
         ->set('newName', 'urgent')->call('create')->assertHasErrors('newName');
 });
 
-it('isolates workspaces when switching', function () {
+it('isolates workspaces when switching (multi-workspace mode)', function () {
+    config(['tracker.shared_workspace' => false]);
     [$user, $first] = signIn();
     $second = Workspace::factory()->create();
 

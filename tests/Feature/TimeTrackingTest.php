@@ -63,7 +63,8 @@ it('resolves hourly rates by precedence', function () {
     expect($save()->hourly_rate)->toBe(4000);
 });
 
-it('rejects projects from other workspaces and private projects without access', function () {
+it('rejects projects from other workspaces and private projects without access (multi-workspace mode)', function () {
+    config(['tracker.shared_workspace' => false]);
     [$user, $workspace] = signIn();
     $foreign = Project::factory()->create();
     $member = addMember($workspace);
