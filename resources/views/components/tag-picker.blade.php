@@ -8,7 +8,7 @@
             <x-icon name="tag" class="size-5 text-muted" />
         @endif
     </button>
-    <div x-show="open" x-cloak x-transition.origin.top class="dropdown-panel right-0 w-64">
+    <div x-show="open" x-cloak x-transition.origin.top class="dropdown-panel max-sm:fixed max-sm:inset-x-3 max-sm:w-auto sm:right-0 sm:w-64">
         <template x-if="open">
             <div>
                 <div class="p-2 border-b border-line-soft">

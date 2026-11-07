@@ -5,7 +5,7 @@
         {{ $label }}@if (count($selected)) <span class="ml-1 rounded-full bg-primary px-1.5 text-[10px] text-white">{{ count($selected) }}</span>@endif
         <x-icon name="chevron-down" class="size-3.5" />
     </button>
-    <div x-show="open" x-cloak x-transition.origin.top.left class="dropdown-panel w-64 left-0">
+    <div x-show="open" x-cloak x-transition.origin.top.left class="dropdown-panel max-sm:fixed max-sm:inset-x-3 max-sm:w-auto sm:left-0 sm:w-64">
         <div class="p-2 border-b border-line-soft"><input x-ref="search" x-model="search" type="text" class="input h-8" placeholder="Search {{ strtolower($label) }}"></div>
         <div class="max-h-64 overflow-y-auto py-1">
             @if ($withNone)

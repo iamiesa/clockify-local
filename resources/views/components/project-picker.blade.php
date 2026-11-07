@@ -11,7 +11,7 @@
         @endif
     </button>
 
-    <div x-show="open" x-cloak x-transition.origin.top class="dropdown-panel left-0 sm:left-auto sm:right-0 w-[min(22rem,calc(100vw-2rem))]">
+    <div x-show="open" x-cloak x-transition.origin.top class="dropdown-panel max-sm:fixed max-sm:inset-x-3 max-sm:w-auto sm:right-0 sm:w-[22rem]">
         <template x-if="open">
             <div>
                 <div class="p-2 border-b border-line-soft">

@@ -6,7 +6,7 @@
             <x-icon name="calendar" class="size-4 text-muted" />
             <span class="whitespace-nowrap">{{ $label }}</span>
         </button>
-        <div x-show="open" x-cloak x-transition.origin.top.right class="dropdown-panel right-0 w-72 sm:w-[28rem] flex flex-col sm:flex-row">
+        <div x-show="open" x-cloak x-transition.origin.top.right class="dropdown-panel max-sm:fixed max-sm:inset-x-3 max-sm:w-auto sm:right-0 sm:w-[28rem] flex flex-col sm:flex-row">
             <div class="sm:w-40 py-1 border-b sm:border-b-0 sm:border-r border-line-soft grid grid-cols-2 sm:block">
                 @foreach (\App\Support\DateRange::PRESETS as $key => $text)
                     <button type="button" wire:click="applyPreset('{{ $key }}')" x-on:click="close()" @class(['dropdown-item', 'text-primary font-medium' => $preset === $key])>{{ $text }}</button>
