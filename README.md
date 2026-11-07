@@ -102,6 +102,20 @@ on them.
 **Custom domain:** add it under the Render service's *Settings → Custom Domains*, create the DNS
 record it shows at your registrar, then update `APP_URL`.
 
+### Alternative: MySQL
+
+The test suite also passes on MySQL 8.4 and TiDB v8.5 (MySQL-compatible, e.g. TiDB Cloud's free
+tier). To use MySQL instead of Postgres, change these variables in Render:
+
+| Variable | Value |
+|---|---|
+| `DB_CONNECTION` | `mysql` |
+| `DB_URL` | `mysql://user:password@host:port/database` |
+| `MYSQL_ATTR_SSL_CA` | `/etc/ssl/certs/ca-certificates.crt` (for hosts whose TLS certificate is from a public CA, such as TiDB Cloud) |
+
+Hosts that sign connections with their own CA (e.g. Aiven) need that CA file added to the image
+and `MYSQL_ATTR_SSL_CA` pointed at it.
+
 ### Environment variables
 
 | Variable | Production value |
