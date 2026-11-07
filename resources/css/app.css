@@ -1,0 +1,116 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+@source '../views/**/*.blade.php';
+@source '../js/**/*.js';
+@source '../../app/**/*.php';
+
+@theme {
+    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji';
+    --color-primary: #03a9f4;
+    --color-primary-dark: #0288d1;
+    --color-primary-soft: #e1f5fe;
+    --color-canvas: #f2f6f8;
+    --color-line: #c6d2d9;
+    --color-line-soft: #e4eaee;
+    --color-ink: #333333;
+    --color-muted: #8a9ba5;
+    --color-danger: #f44336;
+    --color-surface: #ffffff;
+    --color-header: #e4eaee;
+}
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Dark theme: same tokens, darker values. Toggled by the `dark` class on <html>. */
+.dark {
+    --color-primary-soft: #10384c;
+    --color-canvas: #1b2227;
+    --color-surface: #232c33;
+    --color-header: #2a343c;
+    --color-line: #3a4650;
+    --color-line-soft: #303b43;
+    --color-ink: #e3e8eb;
+    --color-muted: #8b9ca6;
+    color-scheme: dark;
+}
+
+[x-cloak] {
+    display: none !important;
+}
+
+@utility btn {
+    @apply inline-flex items-center justify-center gap-1.5 rounded-sm px-4 h-9 text-sm font-medium uppercase tracking-wide transition-colors disabled:opacity-50 disabled:cursor-not-allowed cursor-pointer whitespace-nowrap;
+}
+@utility btn-primary {
+    @apply btn bg-primary text-white hover:bg-primary-dark;
+}
+@utility btn-secondary {
+    @apply btn border border-line bg-surface text-ink hover:bg-canvas;
+}
+@utility btn-danger {
+    @apply btn bg-danger text-white hover:bg-red-700;
+}
+@utility btn-link {
+    @apply text-primary hover:underline cursor-pointer text-sm;
+}
+@utility btn-icon {
+    @apply inline-flex items-center justify-center size-8 rounded-sm text-muted hover:bg-canvas hover:text-ink transition-colors cursor-pointer;
+}
+@utility input {
+    @apply block w-full h-9 rounded-sm border border-line bg-surface px-3 text-sm text-ink placeholder:text-muted focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary disabled:bg-canvas;
+}
+@utility label {
+    @apply block text-xs font-medium uppercase tracking-wide text-muted mb-1;
+}
+@utility card {
+    @apply bg-surface border border-line rounded-sm;
+}
+@utility card-header {
+    @apply flex items-center justify-between gap-3 px-4 py-2.5 bg-header border-b border-line text-sm text-muted;
+}
+@utility page-title {
+    @apply text-2xl font-normal text-ink;
+}
+@utility table-head {
+    @apply text-xs uppercase tracking-wide text-muted font-medium;
+}
+@utility tab {
+    @apply px-4 py-2.5 text-sm uppercase tracking-wide text-muted border-b-2 border-transparent hover:text-ink cursor-pointer;
+}
+@utility tab-active {
+    @apply text-ink border-primary;
+}
+@utility chip {
+    @apply inline-flex items-center gap-1 rounded-full px-2.5 py-0.5 text-xs;
+}
+@utility dropdown-panel {
+    @apply absolute z-40 mt-1 bg-surface border border-line rounded-sm shadow-lg;
+}
+@utility dropdown-item {
+    @apply flex w-full items-center gap-2 px-3 py-2 text-left text-sm text-ink hover:bg-canvas cursor-pointer;
+}
+@utility error {
+    @apply mt-1 text-xs text-danger;
+}
+
+textarea.input {
+    height: auto;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+}
+
+/* Every <select>: replace the native arrow (which hugs the edge) with an inset chevron. */
+@layer base {
+    select:not([multiple]):not([size]) {
+        appearance: none;
+        background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238a9ba5' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+        background-repeat: no-repeat;
+        background-position: right 0.625rem center;
+        background-size: 1rem 1rem;
+        padding-inline-end: 2.25rem !important;
+        text-overflow: ellipsis;
+        cursor: pointer;
+    }
+}
